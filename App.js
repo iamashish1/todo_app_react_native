@@ -13,7 +13,7 @@ export default function App() {
   const [text, setText] = useState('');
   const [isEnabled, changeStatus] = useState(false);
   const [error, setError] = useState('');
-  const [tasks, setTasks] = useState([{ id: 1, title: "Do the dishes", status: "Completed" }, { id: 1, title: "Do the dishes", status: "Open" }]);
+  const [tasks, setTasks] = useState([{ id: 1, title: "Do the dishes", completed: true }, { id: 2, title: "Do the dishes", completed: false }]);
 
   const handleTextChange = (inputText) => {
     setText(inputText);
@@ -44,6 +44,27 @@ export default function App() {
     }
   };
 
+  const updatetasks = (togTask, completed, isDeleteAction) => {
+    // We need to update tasks either delete or toggled
+    if (isDeleteAction == true) {
+      const newtasks = tasks.filter(
+        (task) => task.id !== togTask.id
+      );
+      setTasks(newtasks);
+
+    } else {
+      const updatedTasks = tasks.map((task) => {
+        if (task.id === togTask.id) {
+          task.completed = completed
+        }
+        return task;
+      });
+      setTasks(updatedTasks);
+    }
+
+
+  }
+
   return (
     <NavigationContainer >
       <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -53,7 +74,7 @@ export default function App() {
           }
         } >
           {(props) => (
-            <Todo {...props} tasks={tasks} />
+            <Todo {...props} tasks={tasks} updateTasks={updatetasks} />
           )}
         </Tab.Screen>
         <Tab.Screen name="Add Task" options={

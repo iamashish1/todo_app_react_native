@@ -3,8 +3,7 @@ import { View, Text } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { headerStyles } from './HeaderStyle';
 
-const HeaderComponent = ({isAdd}) => {
-    console.log(isAdd);
+const HeaderComponent = ({ isAdd }) => {
     return (
         <View style={headerStyles.container}>
             <View style={headerStyles.leftContainer}>

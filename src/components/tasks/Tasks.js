@@ -14,7 +14,7 @@ const TasksComponent = ({ tasks, setModalVisible, selectedTodo }) => {
             <View style={taskStyle.container}>
                 <Text style={taskStyle.idText}>Id: {item.id}</Text>
                 <Text style={taskStyle.titleText}>{item.title}</Text>
-                <Text style={taskStyle.statusText}>Status: {item.status}</Text>
+                <Text style={taskStyle.statusText}>Status: {item.completed ? "Completed" : "Open"}</Text>
             </View>
         </Pressable>
     );
