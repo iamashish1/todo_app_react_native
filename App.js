@@ -1,4 +1,4 @@
-import { StyleSheet, Keyboard } from 'react-native';
+import { StyleSheet, Keyboard, SafeAreaView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import Todo from './src/pages/TodoListScreen'
 import AddTodoTask from './src/pages/AddTaskScreen';
@@ -7,13 +7,14 @@ import React, { useState } from 'react';
 import uuid from 'react-native-uuid';
 import { TODO_EMPTY_ERROR } from './utils/Constant';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import HeaderComponent from './src/components/header/Header';
 const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [text, setText] = useState('');
   const [isEnabled, changeStatus] = useState(false);
   const [error, setError] = useState('');
-  const [tasks, setTasks] = useState([{ id: 1, title: "Do the dishes", completed: true }, { id: 2, title: "Do the dishes", completed: false }]);
+  const [tasks, setTasks] = useState([]);
 
   const handleTextChange = (inputText) => {
     setText(inputText);
@@ -21,7 +22,8 @@ export default function App() {
 
 
   const toggleSwitch = () => {
-    changeStatus((previousState) => !previousState);
+    changeStatus(!isEnabled);
+
   };
 
 
@@ -35,7 +37,7 @@ export default function App() {
 
       //ADDING TASK HERE
 
-      setTasks((previousState) => [...previousState.concat({ id: randomId, title: text, status: isEnabled ? 'Completed' : 'Open', })])
+      setTasks((previousState) => [...previousState.concat({ id: randomId, title: text, completed: isEnabled })])
 
       Keyboard.dismiss();
       //Resetting the textinput and task status to initial state
@@ -65,7 +67,9 @@ export default function App() {
 
   }
 
-  return (
+  return (<SafeAreaView style={{ flex: 1 }}>
+    <StatusBar style="auto" />
+    <HeaderComponent />
     <NavigationContainer >
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="List Tasks" options={
@@ -87,6 +91,8 @@ export default function App() {
         </Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
+  </SafeAreaView>
+
 
   );
 

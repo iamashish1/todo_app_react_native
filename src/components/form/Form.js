@@ -5,8 +5,7 @@ import ErrorComponent, { } from '../error/Error'
 const FormComponent = ({ text, handleTextChange, isEnabled, toggleSwitch, addTodoTask, error }) => {
     return (
         <View style={formStyles.container}>
-            {/* short-circuit evaluation */}
-            {/* {error !== '' && <ErrorComponent message={error} />} */}
+
             <ErrorComponent message={error} />
             <TextInput
                 style={formStyles.input}
