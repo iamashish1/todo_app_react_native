@@ -1,4 +1,4 @@
-import { StyleSheet, Keyboard, ToastAndroid, SafeAreaView, StatusBar, ActivityIndicator, View } from 'react-native';
+import { StyleSheet, Keyboard,Platform, ToastAndroid, Alert, SafeAreaView, StatusBar, ActivityIndicator, View } from 'react-native';
 import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Todo from './src/pages/TodoListScreen'
@@ -30,15 +30,20 @@ export default function App() {
   const showToastWithGravityAndOffset = (isAdded, isDeleted, isStatusChaneged) => {
     let message = isAdded ? 'Task Successfully Saved!' : isDeleted ? 'Task Successfully Deleted!' : "Status Chnaged";
 
-    
 
-    ToastAndroid.showWithGravityAndOffset(
-      message,
-      ToastAndroid.LONG,
-      ToastAndroid.BOTTOM,
-      25,
-      50,
-    );
+    if (Platform.OS === 'android') {
+      ToastAndroid.showWithGravityAndOffset(
+        message,
+        ToastAndroid.LONG,
+        ToastAndroid.BOTTOM,
+        25,
+        50,
+      );
+    } else {
+      Alert.alert(message,)
+
+    }
+
   };
 
   //Use UseEffect to fetch data from firestore
@@ -98,7 +103,7 @@ export default function App() {
         'Tasks');
       addDoc(dbCollection, { title: text, completed: isEnabled })
         .then((docRef) => {
-          showToastWithGravityAndOffset(true,false,false);
+          showToastWithGravityAndOffset(true, false, false);
           setError('');
           //ADDING TASK HERE
           setTasks((previousState) => [...previousState.concat({ id: docRef.id, title: text, completed: isEnabled })])
@@ -136,7 +141,7 @@ export default function App() {
             (task) => task.id !== togTask.id
           );
           setTasks(newtasks);
-          showToastWithGravityAndOffset(false,true,false);
+          showToastWithGravityAndOffset(false, true, false);
 
 
         })
@@ -156,7 +161,7 @@ export default function App() {
         completed: completed
       })
         .then(() => {
-          showToastWithGravityAndOffset(false,false,true);
+          showToastWithGravityAndOffset(false, false, true);
 
           console.log('Successfully updated!');
           const updatedTasks = tasks.map((task) => {
