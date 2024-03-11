@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Switch, Pressable } from 'react-native';
+import { View, Text, TextInput, Switch, Pressable, ActivityIndicator } from 'react-native';
 import { formStyles } from './FormStyle'
 import ErrorComponent, { } from '../error/Error'
-const FormComponent = ({ text, handleTextChange, isEnabled, toggleSwitch, addTodoTask, error }) => {
+const FormComponent = ({ text, handleTextChange, isEnabled, toggleSwitch, addTodoTask, error, isLoading }) => {
+
+    console.log(isEnabled)
     return (
         <View style={formStyles.container}>
 
@@ -20,7 +21,12 @@ const FormComponent = ({ text, handleTextChange, isEnabled, toggleSwitch, addTod
                     value={isEnabled} />
             </View>
             <Pressable style={formStyles.button} onPress={addTodoTask}>
-                <Text style={{ color: 'white' }}>Add</Text>
+                {(isLoading == true) ? (
+                    <ActivityIndicator size='small' color='#ffffff' />
+                ) : (
+                    <Text style={{ color: 'white' }}>Add</Text>
+                )}
+
             </Pressable>
         </View>
     );

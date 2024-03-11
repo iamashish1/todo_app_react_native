@@ -6,7 +6,7 @@ const AddTodoTask = (props) => {
     
     return (
         <View style={{ flex: 1 }}>
-            <Form error={props.error} addTodoTask={props.addTodoTask} handleTextChange={props.handleTextChange} isEnabled={props.isEnabled} text={props.text} toggleSwitch={props.toggleSwitch} />
+            <Form error={props.error} addTodoTask={props.addTodoTask} handleTextChange={props.handleTextChange} isEnabled={props.isEnabled} text={props.text} toggleSwitch={props.toggleSwitch} isLoading={props.isLoading} />
         </View>
 
     );
